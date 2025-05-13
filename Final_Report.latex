@@ -1,0 +1,1826 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{lmodern}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same} % disable monospaced font for URLs
+\hypersetup{
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\author{}
+\date{}
+
+\begin{document}
+
+Advance Statistics
+
+\textbf{Prediction of USA' Inflation Using ML Models}
+
+ARIMA , SVM , Random Forest
+
+
+
+
+\hypertarget{introduction}{%
+\section{Introduction}\label{introduction}}
+
+Inflation forecasting plays a pivotal role in economic planning, policy
+formulation, and decision-making. It refers to the process of predicting
+the rate at which the general level of prices for goods and services
+rises, eroding the purchasing power of money. Accurate inflation
+forecasts are crucial for governments, businesses, and financial
+institutions as they influence a wide range of economic decisions,
+including interest rates, wages, tax policies, and investment
+strategies. Over the years, various models and methods have been
+developed to predict inflation, utilizing a range of data sources, from
+macroeconomic indicators to market expectations.
+
+\hypertarget{context-and-importance-of-inflation-forecasting}{%
+\paragraph{\texorpdfstring{\textbf{Context and Importance of Inflation
+Forecasting:}}{Context and Importance of Inflation Forecasting:}}\label{context-and-importance-of-inflation-forecasting}}
+
+Inflation has significant economic implications. It directly impacts the
+purchasing power of consumers, affecting everything from household
+savings to the cost of living. For governments and central banks,
+managing inflation is a core economic objective. High inflation can lead
+to reduced consumer confidence, economic instability, and a decline in
+real incomes, while low inflation or deflation can signal weak demand
+and an economic slowdown. Hence, accurate forecasting of inflation
+becomes vital to ensure that policy interventions can be timely and
+effective.
+
+Inflation forecasting is a complex task due to the many factors
+influencing price changes. These include demand and supply dynamics,
+labor market conditions, global economic factors, and fiscal policies.
+Moreover, inflation is inherently a lagging indicator, meaning it
+reflects past trends and conditions, making its forecasting even more
+challenging. Despite these challenges, inflation prediction is essential
+to maintain economic stability, as governments and central banks adjust
+their monetary policies based on forecasted inflation trends.
+
+\hypertarget{historical-context}{%
+\paragraph{\texorpdfstring{\textbf{Historical
+Context:}}{Historical Context:}}\label{historical-context}}
+
+The history of inflation forecasting dates back to the early 20th
+century when economists began recognizing the importance of anticipating
+price movements. Early approaches focused on simple statistical models
+that relied heavily on historical data. The simplest of these models,
+such as univariate time series models, relied solely on past inflation
+rates to predict future values. However, such models were limited in
+their accuracy, particularly during periods of significant economic
+change or external shocks.
+
+The evolution of inflation forecasting models accelerated with the rise
+of macroeconomic theory and econometric techniques in the mid-20th
+century. Economists like Phillips and Keynesian scholars emphasized the
+relationship between inflation and unemployment, leading to the
+development of the Phillips Curve, which suggested that inflation could
+be managed through government fiscal and monetary policies. During this
+period, econometric models gained prominence as policymakers sought to
+understand the effects of monetary policies on inflation.
+
+By the 1970s and 1980s, with the rise of globalization and increasing
+complexity in the global economy, traditional models became less
+effective. The 1973 oil crisis, for example, demonstrated that
+supply-side shocks could significantly alter inflationary trends,
+prompting economists to rethink the assumptions of many forecasting
+models. Newer approaches, such as structural macroeconomic models, began
+to incorporate more variables and detailed data sets to better capture
+the complexities of inflation dynamics.
+
+In the 1990s and early 2000s, the increased availability of
+high-frequency economic data, coupled with advancements in computational
+power, paved the way for more sophisticated models. Central banks,
+including the Federal Reserve and the European Central Bank, began using
+a combination of various econometric and statistical models to forecast
+inflation more effectively. These methods allowed policymakers to refine
+their inflation-targeting strategies, making their interventions more
+precise and timely.
+
+\hypertarget{science-behind-inflation-forecasting}{%
+\paragraph{\texorpdfstring{\textbf{Science Behind Inflation
+Forecasting:}}{Science Behind Inflation Forecasting:}}\label{science-behind-inflation-forecasting}}
+
+Inflation forecasting models can be broadly classified into two
+categories: \textbf{structural models} and \textbf{time-series models}.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  \textbf{Structural Models:\\
+  } Structural models, such as the New Keynesian model, aim to explain
+  inflation based on underlying economic principles. These models
+  incorporate relationships between various economic variables such as
+  output, unemployment, interest rates, and wages. Structural models
+  typically rely on economic theory to explain the channels through
+  which different factors influence inflation. For example, the output
+  gap---defined as the difference between actual and potential
+  output---plays a significant role in predicting inflation. When the
+  economy is operating above its potential (i.e., when there is high
+  demand for goods and services), inflation tends to rise.
+\item
+  \textbf{Time-Series Models:\\
+  } Time-series models, on the other hand, rely purely on historical
+  data to predict future inflation. The most common time-series models
+  include \textbf{Autoregressive Integrated Moving Average (ARIMA)}
+  models, which capture the temporal dependencies in the inflation data.
+  These models assume that future inflation can be predicted based on
+  past inflation trends, with no explicit need to consider the
+  underlying economic causes. However, time-series models can often be
+  improved by including external variables, such as oil prices, exchange
+  rates, and labor market indicators.
+\end{enumerate}
+
+Over time, economists have combined elements of both approaches, leading
+to the development of \textbf{mixed-frequency models} and
+\textbf{forecast combination techniques}. These models incorporate
+multiple sources of data, such as expert judgment, macroeconomic
+variables, and combinations of various forecasting models, in an effort
+to improve accuracy. Additionally, machine learning techniques, such as
+\textbf{Support Vector Machines (SVMs)} and \textbf{Random Forest
+models}, have recently been applied to inflation forecasting, providing
+more advanced methods for capturing complex, nonlinear relationships in
+data.
+
+\hypertarget{reason-for-choosing-the-topic}{%
+\paragraph{\texorpdfstring{\textbf{Reason for Choosing the
+Topic:}}{Reason for Choosing the Topic:}}\label{reason-for-choosing-the-topic}}
+
+The motivation for choosing the topic of inflation forecasting stems
+from its central importance in economic policymaking and financial
+planning. As the world continues to experience rapid economic
+transformations---driven by factors such as globalization, technological
+advancements, and climate change---the ability to predict inflation
+becomes even more critical. Traditional models, while valuable, often
+fail to account for the complexities introduced by global
+interconnectedness and unforeseen shocks. This has prompted a renewed
+interest in developing more robust, adaptive forecasting methods that
+can incorporate a wider range of variables and data sources.
+
+The recent global economic disruptions, such as the COVID-19 pandemic
+and subsequent supply chain challenges, have further underscored the
+need for more accurate inflation predictions. The pandemic, for example,
+led to both supply-side and demand-side shocks that were difficult to
+predict using traditional forecasting models. Therefore, this research
+aims to contribute to the field of inflation forecasting by exploring
+advanced methodologies, including the use of machine learning techniques
+and forecast combinations, to enhance prediction accuracy. By
+incorporating a broader array of data sources and employing cutting-edge
+statistical methods, this study aims to improve our understanding of
+inflation dynamics and assist policymakers in making more informed
+decisions.
+
+In conclusion, inflation forecasting remains a critical area of study
+due to its far-reaching implications for economic stability and policy
+effectiveness. As economies continue to face new challenges and
+uncertainties, the ability to predict inflation with greater accuracy
+will be essential for governments and financial institutions alike. This
+report, therefore, aims to investigate the current state of inflation
+forecasting, assess the effectiveness of various methodologies, and
+contribute new insights into how forecasting can be improved to meet the
+demands of the modern economic landscape.
+
+\hypertarget{literature-review}{%
+\paragraph{\texorpdfstring{\textbf{Literature
+Review}}{Literature Review}}\label{literature-review}}
+
+\textbf{Purpose of The Literature Review}
+
+The purpose of this literature review is to explore existing research
+and methodologies related to inflation forecasting, with a particular
+focus on the United States. In this review, we aim to analyze the
+strengths, weaknesses, and applications of various forecasting
+techniques, including traditional time series models such as ARIMA
+(AutoRegressive Integrated Moving Average) and machine learning models
+like Support Vector Machines (SVM) and Random Forest. By understanding
+the methodologies utilized in past studies, this review seeks to provide
+a foundation for selecting the most effective forecasting techniques and
+highlight gaps in current research that this project intends to address.
+
+\hypertarget{contextualization}{%
+\paragraph{\texorpdfstring{\textbf{Contextualization}}{Contextualization}}\label{contextualization}}
+
+Inflation forecasting is a critical component of economic analysis, as
+it provides policymakers, businesses, and investors with valuable
+insights into future price trends. Accurate inflation predictions are
+essential for making informed decisions regarding monetary policy,
+interest rates, wage adjustments, and long-term investment planning. In
+developed countries like the USA, inflation forecasting plays a pivotal
+role in shaping the broader economic landscape. Given the complexity and
+volatility of inflationary pressures---often influenced by domestic and
+international factors---having reliable forecasting models can help
+mitigate economic risks and guide the formulation of effective policy
+responses. Moreover, inflation forecasts allow central banks, such as
+the Federal Reserve, to implement targeted measures to control inflation
+and ensure stable economic growth.
+
+\hypertarget{scope-of-the-review}{%
+\paragraph{\texorpdfstring{\textbf{Scope of the
+Review}}{Scope of the Review}}\label{scope-of-the-review}}
+
+This literature review will cover the application of various inflation
+forecasting techniques, focusing on both traditional and modern methods.
+The primary models under review will include ARIMA, which is widely used
+for time series forecasting due to its ability to model trends and
+seasonality in inflation data. Additionally, the review will discuss
+machine learning techniques such as Support Vector Machines (SVM) and
+Random Forest, which have gained popularity in recent years for their
+capacity to handle large datasets and capture complex, non-linear
+relationships in economic data. The effectiveness of these models will
+be evaluated based on their ability to predict inflation in the context
+of the USA, with comparisons drawn from empirical studies that have
+applied these methods to similar macroeconomic forecasting tasks.
+Finally, the review will discuss the advantages and limitations of these
+methods, including considerations of model accuracy, computational
+complexity, and the potential for overfitting. This review aims to
+provide a comprehensive understanding of the state of inflation
+forecasting research, identifying key methodologies and highlighting
+areas for further exploration.
+
+\hypertarget{theoretical-background-on-inflation-and-economic-forecasting}{%
+\subsubsection{Theoretical Background on Inflation and Economic
+Forecasting}\label{theoretical-background-on-inflation-and-economic-forecasting}}
+
+\hypertarget{inflation-definition}{%
+\paragraph{\texorpdfstring{\textbf{Inflation
+Definition}}{Inflation Definition}}\label{inflation-definition}}
+
+Inflation refers to the general increase in the price level of goods and
+services over time, resulting in a decrease in the purchasing power of a
+currency. It is typically measured as the percentage change in the
+Consumer Price Index (CPI) or other price indices over a specific
+period, such as monthly or annually. Inflation can be categorized into
+two types: \textbf{demand-pull inflation}, which occurs when demand for
+goods and services exceeds their supply, and \textbf{cost-push
+inflation}, which arises when the cost of production increases (e.g.,
+due to rising wages or raw material prices). A moderate level of
+inflation is often considered necessary for economic growth, but when
+inflation becomes too high or too volatile, it can lead to economic
+instability.
+
+In developed economies like the USA, inflation is closely monitored and
+controlled due to its potential to impact multiple aspects of the
+economy. High inflation can erode consumer purchasing power, disrupt
+savings, and lead to uncertainty in investment decisions. On the other
+hand, deflation---where prices fall across the economy---can lead to
+reduced economic activity, higher unemployment, and potentially a
+recession. Therefore, central banks, such as the Federal Reserve in the
+USA, aim to maintain inflation at a target rate (usually around 2\%) to
+ensure stable economic conditions, foster growth, and protect the value
+of the currency.
+
+\hypertarget{inflation-forecasting}{%
+\paragraph{\texorpdfstring{\textbf{Inflation
+Forecasting}}{Inflation Forecasting}}\label{inflation-forecasting}}
+
+Inflation forecasting is a crucial tool for central banks, policymakers,
+and financial analysts. By accurately predicting future inflation rates,
+these stakeholders can take preemptive actions to stabilize the economy,
+adjust interest rates, and formulate appropriate fiscal and monetary
+policies. Effective inflation forecasting helps mitigate the risk of
+inflationary or deflationary spirals, enabling governments to maintain
+control over economic variables such as employment, wages, and prices.
+
+There are various methods for forecasting inflation, ranging from
+traditional econometric models to advanced machine learning techniques.
+\textbf{Econometric models}, such as \textbf{ARIMA} (AutoRegressive
+Integrated Moving Average) and \textbf{VAR} (Vector Autoregression), are
+widely used for time series forecasting. These models analyze historical
+inflation data to identify patterns, trends, and seasonal variations,
+which can then be used to predict future inflation rates. The ARIMA
+model, in particular, is effective in capturing the autoregressive (AR)
+and moving average (MA) components of time series data and handling
+stationarity through differencing.
+
+In contrast, \textbf{machine learning models}, such as \textbf{Support
+Vector Machines (SVM)} and \textbf{Random Forests}, have emerged as
+powerful tools for forecasting inflation in more recent years. These
+models excel at handling large, complex datasets and can identify
+non-linear relationships between inflation and other economic variables.
+SVM, for example, can efficiently perform regression tasks in
+high-dimensional feature spaces, while Random Forest is an ensemble
+learning method that uses multiple decision trees to improve prediction
+accuracy and avoid overfitting.
+
+In addition to these models, \textbf{hybrid approaches} combining
+traditional econometric methods with machine learning techniques are
+gaining popularity. These hybrid models aim to leverage the strengths of
+both approaches to improve forecasting accuracy and robustness.
+
+The importance of inflation forecasting extends beyond prediction
+accuracy. It also involves understanding the underlying economic factors
+that drive inflation. By integrating various economic indicators---such
+as employment rates, wage growth, interest rates, and external factors
+like oil prices---into forecasting models, analysts can create more
+comprehensive and accurate predictions. Additionally, forecasting
+inflation helps in managing expectations among businesses, consumers,
+and investors, reducing uncertainty and fostering confidence in economic
+policies.
+
+\hypertarget{overview-of-forecasting-methods}{%
+\subsubsection{Overview of Forecasting
+Methods}\label{overview-of-forecasting-methods}}
+
+\hypertarget{arima-autoregressive-integrated-moving-average}{%
+\paragraph{\texorpdfstring{\textbf{ARIMA (AutoRegressive Integrated
+Moving
+Average)}}{ARIMA (AutoRegressive Integrated Moving Average)}}\label{arima-autoregressive-integrated-moving-average}}
+
+ARIMA is one of the most widely used time series forecasting models. It
+is particularly popular for economic forecasting, including inflation,
+due to its ability to model the underlying trends, seasonality, and
+autocorrelations in the data. The ARIMA model consists of three main
+components:
+
+\begin{itemize}
+\item
+  \textbf{AR (AutoRegressive)}: This component represents the
+  relationship between an observation and a specified number of lagged
+  observations (i.e., past values). The AR term captures the influence
+  of previous time periods on future values.
+\item
+  \textbf{I (Integrated)}: This component involves differencing the
+  series to make it stationary. Stationarity refers to a time series
+  whose statistical properties, such as mean and variance, do not change
+  over time. Differencing helps eliminate trends and seasonality from
+  the data, ensuring the model is applied to a stationary series.
+\item
+  \textbf{MA (Moving Average)}: The MA component models the relationship
+  between an observation and the residual errors from a moving average
+  model applied to lagged observations. This captures short-term random
+  shocks or noise in the data.
+\end{itemize}
+
+ARIMA models are particularly effective for forecasting inflation
+because inflation data often exhibit time-dependent patterns and cycles,
+which ARIMA can model efficiently. It can handle both short-term
+fluctuations and long-term trends, making it suitable for forecasting
+economic indicators such as inflation, especially in developed economies
+like the USA.
+
+Many studies have applied ARIMA for forecasting inflation in the USA,
+given its robustness in time series modeling. For instance, \textbf{Zhou
+et al. (2019)} used ARIMA models to forecast inflation in the USA,
+comparing its predictions with actual CPI data and demonstrating its
+reliability for short-term forecasting. Similarly, \textbf{Lee and Lee
+(2017)} applied ARIMA to predict inflation and compared its performance
+against other econometric models, finding ARIMA to be a strong contender
+for medium-term inflation forecasting.
+
+\hypertarget{support-vector-machine-svm}{%
+\paragraph{\texorpdfstring{\textbf{Support Vector Machine
+(SVM)}}{Support Vector Machine (SVM)}}\label{support-vector-machine-svm}}
+
+Support Vector Machine (SVM) is a machine learning algorithm
+traditionally used for classification tasks but has also proven
+effective for regression tasks, particularly in time series forecasting.
+SVM operates by finding the hyperplane that best separates data points
+into different classes (for classification) or predicts a continuous
+value (for regression). The \textbf{Support Vector Regression (SVR)}
+variant of SVM is commonly used for time series forecasting tasks, as it
+seeks to find the best-fitting line or curve that minimizes the error
+within a specified margin.
+
+One of the key strengths of SVM for forecasting is its ability to model
+non-linear relationships in the data, which makes it more flexible than
+traditional time series models like ARIMA. In the context of inflation
+forecasting, SVM can capture complex relationships between inflation and
+other macroeconomic variables (such as GDP, unemployment, and interest
+rates) that may not be linearly related.
+
+Studies comparing SVM to traditional time series models, like ARIMA,
+have found that SVM often outperforms ARIMA, especially when there are
+non-linear patterns or multiple influencing factors. \textbf{Chong et
+al. (2017)} compared the performance of SVM and ARIMA in forecasting US
+inflation and found that SVM provided more accurate predictions,
+particularly when dealing with high-dimensional economic data. Moreover,
+\textbf{Xu et al. (2020)} demonstrated that SVR, when applied to
+inflation forecasting in the USA, provided better accuracy than ARIMA,
+especially in cases with irregular or non-stationary data.
+
+\hypertarget{random-forest}{%
+\paragraph{\texorpdfstring{\textbf{Random
+Forest}}{Random Forest}}\label{random-forest}}
+
+Random Forest is an ensemble learning method that builds multiple
+decision trees and combines their predictions to produce a more accurate
+and stable forecast. Each tree is trained on a random subset of the
+data, and the final output is determined by aggregating the results from
+all individual trees (usually by averaging for regression tasks). The
+strength of Random Forest lies in its ability to model complex,
+non-linear relationships and handle high-dimensional datasets without
+the risk of overfitting.
+
+In time series forecasting, Random Forest can be applied by treating the
+past observations of the time series as input features to predict future
+values. It can also be used alongside other models, such as ARIMA or
+SVM, in hybrid approaches. Random Forest has been shown to be
+particularly useful for forecasting inflation because it can incorporate
+multiple economic indicators simultaneously and handle non-linearities
+in the relationships between variables.
+
+Studies comparing Random Forest to other time series forecasting models,
+such as ARIMA and SVM, have demonstrated its competitive performance.
+\textbf{Sharma et al. (2018)} applied Random Forest to forecast
+inflation in the USA and found that it consistently outperformed ARIMA,
+especially in the presence of multiple variables that affect inflation.
+Moreover, \textbf{Rashid et al. (2020)} concluded that Random Forest was
+particularly effective when dealing with datasets that contain a mix of
+categorical and continuous variables, which are common in macroeconomic
+forecasting.
+
+\hypertarget{comparison-and-performance}{%
+\paragraph{\texorpdfstring{\textbf{Comparison and
+Performance}}{Comparison and Performance}}\label{comparison-and-performance}}
+
+When comparing the three models---ARIMA, SVM, and Random Forest---for
+inflation forecasting, each has its strengths. ARIMA is a robust,
+well-understood model that excels in capturing temporal dependencies in
+historical inflation data. However, it may struggle to handle
+non-linearities and interactions between multiple variables. SVM, on the
+other hand, is highly effective in modeling non-linear relationships and
+is often more accurate when economic data exhibits complex patterns.
+Random Forest, with its ensemble approach, provides high accuracy by
+leveraging multiple decision trees, and it is particularly effective
+when dealing with large, high-dimensional datasets.
+
+In the context of the USA, all three methods have been shown to produce
+reliable inflation forecasts, but the choice of model often depends on
+the specific characteristics of the data and the forecasting horizon.
+Studies suggest that while ARIMA remains a solid choice for short-term
+forecasts, machine learning models like SVM and Random Forest tend to
+offer superior performance for medium to long-term inflation
+forecasting, especially in the presence of complex interactions and
+non-linear trends.
+
+\hypertarget{review-of-empirical-studies}{%
+\subsubsection{Review of Empirical
+Studies}\label{review-of-empirical-studies}}
+
+\hypertarget{usa-specific-studies}{%
+\paragraph{\texorpdfstring{\textbf{USA-specific
+Studies:}}{USA-specific Studies:}}\label{usa-specific-studies}}
+
+Several studies have specifically focused on inflation forecasting for
+the United States using various methodologies. \textbf{Fulton and
+Hubrich (2021)} explored the performance of real-time U.S. inflation
+forecasts from 1999 to 2019. Their analysis showed that combining
+forecasts and using disaggregated inflation components significantly
+improved prediction accuracy, especially after 2009. The researchers
+concluded that employing multiple models and incorporating diverse
+macroeconomic indicators, such as energy prices and labor market data,
+enhances the precision of inflation forecasts. The study supports the
+use of forecast combination strategies, which aligns with the current
+study\textquotesingle s methodology of utilizing multiple models for
+inflation forecasting.
+
+\textbf{Abuselidze (2022)} examined the relationship between oil price
+fluctuations and inflation in the U.S. from 2000 to 2021. Through
+regression analysis, the study identified a significant positive
+correlation between rising oil prices and inflation, emphasizing the
+importance of including oil prices as an independent variable in
+inflation forecasting models. This conclusion supports the current
+study\textquotesingle s approach of integrating oil prices into the
+model to improve prediction accuracy.
+
+\textbf{Mishkin (1990)} tested the hypothesis that short-term interest
+rates can predict inflation, finding that variations in nominal
+short-term interest rates are significantly associated with changes in
+expected inflation. This supports the inclusion of interest rates as a
+key variable in inflation forecasting models and is consistent with the
+current study\textquotesingle s methodology, which uses short-term
+interest rates as a predictor.
+
+\textbf{Amaral et al. (2022)} analyzed the impact of U.S. monetary
+policy on inflation and economic growth over the long term, using a
+Vector Autoregressive (VAR) model. They found that expansionary monetary
+policy, while leading to short-term GDP growth, also results in
+long-term inflationary pressures. This highlights the importance of
+incorporating monetary policy variables, such as interest rates and
+money supply, in forecasting U.S. inflation, which aligns with the
+approach taken in this study.
+
+\hypertarget{comparison-across-models}{%
+\paragraph{\texorpdfstring{\textbf{Comparison Across
+Models:}}{Comparison Across Models:}}\label{comparison-across-models}}
+
+A number of studies have also compared the performance of traditional
+econometric models like ARIMA with advanced machine learning techniques
+such as Support Vector Machines (SVM) and Random Forest in forecasting
+U.S. inflation.
+
+\textbf{Tattikota and Srinivasan (2021)} compared ARIMA, Ridge, LASSO,
+Elastic Net, and Random Forest for forecasting U.S. inflation and
+unemployment. Their findings indicated that machine learning models,
+particularly Random Forest and Elastic Net, outperformed traditional
+econometric models in terms of predictive accuracy. The authors noted
+that while ARIMA is suitable for time series forecasting, machine
+learning models capture complex, non-linear relationships within the
+data, thus improving forecasting precision. This insight reinforces the
+current study\textquotesingle s use of both traditional and advanced
+models for inflation forecasting, especially in capturing intricate
+patterns in economic data.
+
+\textbf{Boesch and Ziegelmann (2024)} introduced the Weighted Lag
+Adaptive Elastic Net (WLadaENet), a novel machine learning model, and
+applied it to U.S. inflation data from 2013 to 2023. Their study
+demonstrated that WLadaENet, which combines Ridge Regression with a time
+series-adapted regularization method, outperformed traditional models,
+especially when handling high-dimensional and nonlinear data. This
+finding supports the incorporation of advanced machine learning
+techniques such as Elastic Net in forecasting inflation, which is
+aligned with the current study\textquotesingle s methodology of
+utilizing machine learning models.
+
+\textbf{Yadav et al. (2023)} compared machine learning models, including
+Random Forest and SVM, to traditional econometric methods for
+forecasting the U.S. Consumer Price Index (CPI). The study found that
+machine learning models outperformed classical models, particularly in
+predicting CPI. This reinforces the view that advanced machine learning
+techniques are highly effective in capturing complex inflation patterns,
+providing stronger predictive accuracy compared to traditional
+econometric models.
+
+\textbf{Alomani, Kayid, and Abd El-Aal (2025)} conducted a comparative
+analysis of ARIMA and advanced machine learning models for global
+inflation forecasting. They found that ARIMA works well for short-term
+forecasting but falls short in capturing complex, nonlinear
+relationships, which machine learning models such as Random Forest and
+Elastic Net handle more effectively. This supports the current study's
+emphasis on using machine learning models alongside ARIMA for more
+accurate inflation forecasting.
+
+\textbf{Sivaprasad and Srinivas (2012)} introduced a hybrid model
+combining Genetic Algorithms with Support Vector Regression (GA--SVR)
+for forecasting macroeconomic variables, including inflation. Their
+study found that the GA--SVR model significantly outperformed
+traditional econometric models in capturing nonlinear relationships and
+interactions among economic indicators. This emphasizes the potential of
+combining machine learning techniques with evolutionary algorithms, a
+concept reflected in the current study\textquotesingle s approach of
+using SVM and Random Forest for U.S. inflation forecasting.
+
+\textbf{Hossfeld (2010)} investigated the role of money overhang in
+inflation forecasting for the U.S. between 1987 and 2008. Using a
+cointegrated VAR model, the study found that money overhang plays a
+significant role in inflation predictions. This underscores the
+importance of including variables related to money supply, such as M2,
+in forecasting models. The research findings align with the current
+study's methodology, which includes money supply variables to enhance
+forecasting precision.
+
+\hypertarget{challenges-and-limitations-in-forecasting-inflation}{%
+\subsubsection{Challenges and Limitations in Forecasting
+Inflation}\label{challenges-and-limitations-in-forecasting-inflation}}
+
+\hypertarget{model-limitations}{%
+\paragraph{\texorpdfstring{\textbf{Model
+Limitations:}}{Model Limitations:}}\label{model-limitations}}
+
+Each forecasting method used in inflation prediction comes with its own
+set of challenges and limitations.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  \textbf{ARIMA (AutoRegressive Integrated Moving Average):\\
+  } ARIMA is a widely used method for time series forecasting, but it
+  has notable limitations. One of the primary challenges is
+  \textbf{model complexity}. ARIMA models require careful tuning of
+  parameters, such as the order of autoregression (AR), differencing
+  (I), and moving average (MA), which can be difficult and
+  time-consuming. Additionally, ARIMA assumes stationarity in the data,
+  which means that the underlying inflation series must have constant
+  statistical properties over time. In practice, this assumption is
+  often violated, leading to potential model inaccuracies. Furthermore,
+  ARIMA is less effective in capturing \textbf{sudden economic shocks}
+  or structural breaks, such as those caused by political events or
+  financial crises, which can result in forecast errors when such shocks
+  are not accounted for in the model.
+\item
+  \textbf{Support Vector Machines (SVM):\\
+  } SVM, while a powerful machine learning tool, is prone to
+  \textbf{overfitting}. This occurs when the model becomes too complex
+  and starts to "memorize" the training data rather than generalizing
+  from it, leading to poor performance on unseen data. SVMs also require
+  the proper selection of kernel functions and regularization
+  parameters, which can be computationally intensive. Moreover, SVMs
+  struggle with \textbf{scalability} when working with large datasets,
+  as the computation time increases significantly with the size of the
+  data. Another issue with SVM is its reliance on having a large amount
+  of high-quality data to accurately train the model, which may not
+  always be available for inflation forecasting.
+\item
+  \textbf{Random Forest:\\
+  } While Random Forest is a robust and flexible machine learning model,
+  it is not without its challenges. One key issue is its
+  \textbf{interpretability}. Unlike ARIMA, which provides clear insights
+  into the relationships between variables, Random Forest models can be
+  considered "black boxes," making it difficult to understand how
+  specific features (such as oil prices or interest rates) contribute to
+  the inflation forecast. Another limitation of Random Forest is its
+  tendency to \textbf{overfit} if the number of trees is too large,
+  leading to reduced model generalization. Moreover, Random Forest
+  models may struggle to effectively capture \textbf{non-linear
+  relationships} when the data is not sufficiently diverse or when the
+  trees do not fully explore the feature space.
+\end{enumerate}
+
+\hypertarget{data-limitations}{%
+\paragraph{\texorpdfstring{\textbf{Data
+Limitations:}}{Data Limitations:}}\label{data-limitations}}
+
+The accuracy of any inflation forecasting model is heavily reliant on
+the quality and availability of data. However, several data-related
+issues present significant challenges in forecasting inflation.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  \textbf{Missing Values:\\
+  } Real-world economic data often contains missing values due to
+  incomplete reporting or measurement errors. Missing data can undermine
+  the quality of inflation forecasts, as it may lead to biased estimates
+  or reduce the sample size, which could affect the statistical
+  significance of the results. While there are techniques to handle
+  missing data, such as imputation, these methods can introduce their
+  own set of errors if not handled properly.
+\item
+  \textbf{Lack of Real-Time Data:\\
+  } Inflation forecasting typically requires up-to-date data on
+  macroeconomic indicators, such as interest rates, employment figures,
+  and consumer prices. However, many critical economic indicators are
+  reported with a lag, which limits the ability of forecasters to make
+  real-time predictions. This lag between data collection and its
+  availability to modelers can be especially problematic during periods
+  of rapid economic change, where real-time forecasts are crucial.
+\item
+  \textbf{Issues in Variable Selection:\\
+  } Selecting the right set of variables to include in an inflation
+  forecasting model is a challenge. Economic systems are complex, and
+  inflation is influenced by a variety of factors, such as commodity
+  prices, monetary policy, and geopolitical events. However, not all
+  relevant variables may be readily available or easy to quantify,
+  leading to incomplete models. Additionally, overfitting can occur if
+  too many variables are included, making the model overly sensitive to
+  small changes in the data, while underfitting can result from an
+  oversimplified model that omits critical predictors.
+\end{enumerate}
+
+\hypertarget{external-factors}{%
+\paragraph{\texorpdfstring{\textbf{External
+Factors:}}{External Factors:}}\label{external-factors}}
+
+Inflation forecasting is not just about selecting the right model and
+data; it is also heavily influenced by external factors that can
+complicate predictions and lead to significant forecasting errors.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  \textbf{Political Events and Policy Changes:\\
+  } Sudden shifts in government policies, such as changes in taxation,
+  fiscal spending, or monetary policy, can have a direct impact on
+  inflation. For example, a sudden increase in government spending or
+  changes in central bank interest rates can cause unexpected
+  inflationary pressure. Political instability, such as elections,
+  regime changes, or geopolitical tensions, can also create volatility
+  in inflation, making it difficult for forecasting models to accurately
+  predict future trends.
+\item
+  \textbf{Global Crises:\\
+  } Events like financial crises, pandemics (e.g., COVID-19), or global
+  supply chain disruptions can lead to dramatic and sudden shifts in
+  inflation. These events often introduce \textbf{structural breaks} in
+  the economic system, causing traditional models, such as ARIMA, to
+  underperform. For instance, the COVID-19 pandemic disrupted both
+  demand and supply across various sectors, creating unpredictable
+  inflationary patterns that were not anticipated by pre-existing
+  models. Such global shocks are particularly challenging for models
+  that rely on historical data to make predictions, as they represent a
+  fundamental departure from past economic behavior.
+\item
+  \textbf{Market Shifts and External Shocks:\\
+  } Inflation forecasting models also struggle with the unpredictability
+  of market dynamics, such as shifts in global commodity prices (e.g.,
+  oil, metals) or currency fluctuations. These shifts can influence
+  inflation in ways that are difficult to model, especially when they
+  occur suddenly or are not adequately captured in the data. For
+  example, a sudden spike in oil prices due to geopolitical tensions in
+  the Middle East can significantly raise inflation, but this type of
+  shock is hard to forecast with high accuracy, especially in models
+  that rely on historical relationships.
+\end{enumerate}
+
+\hypertarget{conclusion}{%
+\subsubsection{Conclusion}\label{conclusion}}
+
+In conclusion, inflation forecasting remains a critical area of study
+for economists, policymakers, and businesses alike. The literature
+review reveals a diverse set of methods for forecasting inflation,
+including traditional models like ARIMA, as well as more advanced
+machine learning techniques such as Support Vector Machines (SVM) and
+Random Forest. Each method has its strengths and limitations, which were
+discussed in detail, with ARIMA being favored for its simplicity and
+interpretability, while SVM and Random Forest are often chosen for their
+flexibility and ability to capture complex patterns in large datasets.
+
+Empirical studies specifically focused on the USA have provided valuable
+insights into the accuracy and performance of these methods in
+real-world settings. Studies comparing these techniques have
+demonstrated that, while machine learning models tend to outperform
+traditional models in terms of predictive accuracy, they also face
+challenges such as overfitting and lack of interpretability.
+Furthermore, external factors like political events, global crises, and
+economic shocks continue to pose significant challenges to the accuracy
+of inflation forecasting models.
+
+Overall, while the current methods for forecasting inflation offer
+valuable insights, the complexity and volatility of the global economy
+suggest that there is still room for improvement in these techniques.
+Future research should focus on refining existing models, incorporating
+more diverse datasets, and considering the role of external economic
+shocks in shaping inflation trends.
+
+\hypertarget{description-of-variables-and-data}{%
+\subsubsection{Description of Variables and
+Data}\label{description-of-variables-and-data}}
+
+This section outlines the data preparation procedures and offers an
+in-depth explanation of the variables selected for modeling inflation.
+The selection is grounded in both economic theory and empirical findings
+from previous studies. Each variable plays a distinct role in explaining
+inflationary trends in the U.S. economy.
+
+\hypertarget{data-source-and-frequency-alignment}{%
+\paragraph{\texorpdfstring{\textbf{Data Source and Frequency
+Alignment}}{Data Source and Frequency Alignment}}\label{data-source-and-frequency-alignment}}
+
+The data used in this study was obtained from the \textbf{Federal
+Reserve Economic Data (FRED)} repository, maintained by the Federal
+Reserve Bank of St. Louis. FRED is a widely respected and credible
+source of macroeconomic data and provides regularly updated time-series
+data for economic research and forecasting.
+
+However, a common issue encountered was \textbf{disparity in the data
+frequencies}. While inflation and unemployment are typically measured
+and reported \textbf{monthly}, other variables like \textbf{GDP} and
+\textbf{M2} are often \textbf{quarterly}. To enable coherent analysis
+and time-series modeling, it was essential to bring all variables to a
+\textbf{uniform monthly frequency}.
+
+To address this, \textbf{data transformation and preprocessing were
+conducted in R}, using custom-written code. The key preprocessing steps
+included:
+
+\begin{itemize}
+\item
+  \textbf{Temporal alignment}: All variables were adjusted to match a
+  uniform monthly timeline ranging over the same period.
+\item
+  \textbf{Upsampling of quarterly data}: Variables such as GDP and M2
+  were interpolated from quarterly to monthly frequency using
+  \textbf{linear interpolation} and \textbf{spline methods} to maintain
+  trend accuracy.
+\item
+  \textbf{Missing value treatment}: Missing or irregular data points
+  were handled through \textbf{forward fill}, \textbf{backward fill}, or
+  \textbf{mean imputation}, depending on the context.
+\item
+  \textbf{Normalization and scaling}: Log transformations and percent
+  change calculations were used where necessary to stabilize variance
+  and enhance model convergence.
+\end{itemize}
+
+This preprocessing step ensured a well-structured dataset with
+synchronized variables, ready for time-series forecasting using models
+like ARIMA, SVM, and Random Forest.
+
+\hypertarget{selected-variables-and-their-theoretical-importance}{%
+\subsubsection{Selected Variables and Their Theoretical
+Importance}\label{selected-variables-and-their-theoretical-importance}}
+
+The following variables were selected based on their proven relevance in
+macroeconomic literature, policy frameworks, and empirical studies:
+
+\hypertarget{inflation-consumer-price-index---cpi-dependent-variable}{%
+\paragraph{\texorpdfstring{\textbf{1. Inflation (Consumer Price Index -
+CPI) --- Dependent
+Variable}}{1. Inflation (Consumer Price Index - CPI) --- Dependent Variable}}\label{inflation-consumer-price-index---cpi-dependent-variable}}
+
+Inflation, as measured by the \textbf{Consumer Price Index (CPI)}, is
+the \textbf{dependent variable} and the core focus of this study. The
+CPI reflects the average change over time in the prices paid by urban
+consumers for a representative basket of goods and services.
+
+\begin{itemize}
+\item
+  \textbf{Why CPI?}: It is the most commonly used measure of inflation,
+  affecting wage contracts, pensions, interest rates, and monetary
+  policy decisions.
+\item
+  \textbf{Relevance}: CPI captures short-term price dynamics and serves
+  as a barometer for purchasing power and cost-of-living changes.
+\item
+  \textbf{Source}: Monthly CPI data was collected from FRED (Series ID:
+  CPIAUCNS).
+\end{itemize}
+
+\hypertarget{oil-prices-independent-variable}{%
+\paragraph{\texorpdfstring{\textbf{2. Oil Prices --- Independent
+Variable}}{2. Oil Prices --- Independent Variable}}\label{oil-prices-independent-variable}}
+
+Oil prices are a critical external factor that directly influences
+production costs, transportation, and energy sectors. Changes in oil
+prices are often reflected in consumer prices, particularly in the short
+term.
+
+\begin{itemize}
+\item
+  \textbf{Economic Theory}: Higher oil prices can lead to
+  \textbf{cost-push inflation}, especially in energy-dependent economies
+  like the U.S.
+\item
+  \textbf{Recent Context}: Volatile oil prices during geopolitical
+  crises (e.g., Russia-Ukraine conflict) highlight their significant
+  impact on inflation forecasting.
+\item
+  \textbf{Source}: Monthly West Texas Intermediate (WTI) crude oil
+  prices obtained from FRED (Series ID: DCOILWTICO).
+\end{itemize}
+
+\hypertarget{money-supply-m2-independent-variable}{%
+\paragraph{\texorpdfstring{\textbf{3. Money Supply (M2) --- Independent
+Variable}}{3. Money Supply (M2) --- Independent Variable}}\label{money-supply-m2-independent-variable}}
+
+The \textbf{M2 money supply} includes cash, checking deposits, and
+easily convertible near-money assets. It serves as a proxy for liquidity
+and monetary expansion in the economy.
+
+\begin{itemize}
+\item
+  \textbf{Theoretical Foundation}: According to \textbf{monetarist
+  economists} (e.g., Milton Friedman), inflation is fundamentally a
+  monetary phenomenon --- when the money supply grows faster than
+  economic output, inflation tends to rise.
+\item
+  \textbf{Empirical Insight}: A lagged relationship often exists between
+  changes in money supply and inflation.
+\item
+  \textbf{Source}: Quarterly M2 data from FRED (Series ID: M2SL),
+  interpolated to monthly frequency.
+\end{itemize}
+
+\hypertarget{gross-domestic-product-gdp-independent-variable}{%
+\paragraph{\texorpdfstring{\textbf{4. Gross Domestic Product (GDP) ---
+Independent
+Variable}}{4. Gross Domestic Product (GDP) --- Independent Variable}}\label{gross-domestic-product-gdp-independent-variable}}
+
+GDP represents the overall output of the economy and is a crucial
+measure of \textbf{aggregate demand} and \textbf{economic activity}.
+
+\begin{itemize}
+\item
+  \textbf{Relevance to Inflation}: Rising GDP can signal increased
+  demand for goods and services, potentially leading to
+  \textbf{demand-pull inflation} when supply fails to keep pace.
+\item
+  \textbf{Challenges}: Reported quarterly, GDP was transformed using
+  interpolation techniques to create a monthly equivalent for model
+  input.
+\item
+  \textbf{Source}: Real GDP from FRED (Series ID: GDPC1).
+\end{itemize}
+
+\hypertarget{interest-rate-federal-funds-rate-independent-variable}{%
+\paragraph{\texorpdfstring{\textbf{5. Interest Rate (Federal Funds Rate)
+--- Independent
+Variable}}{5. Interest Rate (Federal Funds Rate) --- Independent Variable}}\label{interest-rate-federal-funds-rate-independent-variable}}
+
+The Federal Funds Rate is a key monetary policy instrument used by the
+Federal Reserve to manage economic activity and inflation.
+
+\begin{itemize}
+\item
+  \textbf{Mechanism}: Higher interest rates reduce borrowing and
+  spending, thus easing inflation. Conversely, lower rates can stimulate
+  the economy but may risk inflation.
+\item
+  \textbf{Policy Link}: This variable acts as a direct policy response
+  indicator that captures the \textbf{Federal Reserve's stance} on
+  inflation.
+\item
+  \textbf{Source}: Monthly data from FRED (Series ID: FEDFUNDS).
+\end{itemize}
+
+\hypertarget{unemployment-rate-independent-variable}{%
+\paragraph{\texorpdfstring{\textbf{6. Unemployment Rate --- Independent
+Variable}}{6. Unemployment Rate --- Independent Variable}}\label{unemployment-rate-independent-variable}}
+
+The unemployment rate is a central labor market indicator and is closely
+tied to inflation through the \textbf{Phillips Curve}, which posits an
+inverse relationship between inflation and unemployment.
+
+\begin{itemize}
+\item
+  \textbf{Wage-Price Spiral}: Low unemployment can lead to rising wages,
+  which in turn increase consumer spending and drive prices up.
+\item
+  \textbf{Inflation Trade-offs}: Policymakers often face trade-offs
+  between reducing unemployment and controlling inflation.
+\item
+  \textbf{Source}: Monthly data from FRED (Series ID: UNRATE).
+\end{itemize}
+
+\hypertarget{rationale-for-variable-inclusion}{%
+\subsubsection{Rationale for Variable
+Inclusion}\label{rationale-for-variable-inclusion}}
+
+These variables were chosen based on:
+
+\begin{itemize}
+\item
+  \textbf{Economic theory} (e.g., Quantity Theory of Money, Phillips
+  Curve, supply-demand framework),
+\item
+  \textbf{Empirical support} from past research (as detailed in the
+  literature review), and
+\item
+  \textbf{Policy relevance}, reflecting the key levers influencing
+  inflation in the U.S. economy.
+\end{itemize}
+
+Collectively, they cover \textbf{monetary}, \textbf{real economic},
+\textbf{labor market}, and \textbf{external supply-side} dimensions of
+inflation. Their interaction provides a nuanced and multidimensional
+view required for robust inflation forecasting.
+
+\hypertarget{dataset-limitations}{%
+\subsubsection{Dataset Limitations}\label{dataset-limitations}}
+
+While the data collection and transformation process were rigorous, a
+few limitations are acknowledged:
+
+\begin{itemize}
+\item
+  \textbf{Interpolation Risk}: Converting quarterly data to monthly
+  frequency may smooth out short-term shocks or inflection points.
+\item
+  \textbf{Lag Structures}: Many macroeconomic variables influence
+  inflation with delayed effects; improper lag specification could
+  reduce model accuracy.
+\item
+  \textbf{External Omitted Variables}: Events such as global pandemics,
+  wars, or fiscal policy changes were not explicitly modeled but may
+  influence inflation dynamics indirectly.
+\end{itemize}
+
+\hypertarget{section}{%
+\subsubsection{}\label{section}}
+
+\hypertarget{conclusion-1}{%
+\subsubsection{Conclusion}\label{conclusion-1}}
+
+In summary, the dataset used for this study comprises key macroeconomic
+variables that are well-grounded in theory and practice. Using data from
+FRED ensures accuracy and reliability, while preprocessing in R enabled
+uniformity in frequency and structure. This data foundation is essential
+for the development of predictive models and for understanding the
+driving forces behind inflation in the U.S.
+
+\hypertarget{estimation-of-the-models}{%
+\subsection{Estimation of the Models}\label{estimation-of-the-models}}
+
+In this section, we estimate three distinct models to understand the
+behavior and determinants of inflation in our dataset: \textbf{ARIMA},
+\textbf{Support Vector Machine (SVM)}, and \textbf{Random Forest}. Each
+model uses macroeconomic variables including \textbf{Date} (treated
+numerically to represent time), \textbf{Money Supply (M2)}, and
+\textbf{Unemployment Rate} to predict the dependent variable,
+\textbf{Inflation}. We begin by exploring the theoretical background of
+each model, followed by its estimated form based on the provided output,
+and conclude with a thorough interpretation of the estimated results.
+
+\hypertarget{arima-model-autoregressive-integrated-moving-average}{%
+\subsubsection{ARIMA Model (AutoRegressive Integrated Moving
+Average)}\label{arima-model-autoregressive-integrated-moving-average}}
+
+The ARIMA model is a classical statistical technique designed
+specifically for analyzing and forecasting time series data. It captures
+three components:
+
+\begin{itemize}
+\item
+  \textbf{AR (AutoRegressive)}: uses the dependency between an
+  observation and a number of lagged observations.
+\item
+  \textbf{I (Integrated)}: represents differencing of raw observations
+  to make the time series stationary.
+\item
+  \textbf{MA (Moving Average)}: models the dependency between an
+  observation and a residual error from a moving average model applied
+  to lagged observations.
+\end{itemize}
+
+\hypertarget{general-form-of-arima-with-exogenous-variables-arimax}{%
+\paragraph{\texorpdfstring{\textbf{General Form of ARIMA with Exogenous
+Variables
+(ARIMAX)}}{General Form of ARIMA with Exogenous Variables (ARIMAX)}}\label{general-form-of-arima-with-exogenous-variables-arimax}}
+
+The general equation for an ARIMA(p,d,q) model with exogenous regressors
+is:
+
+\includegraphics[width=5.21875in,height=0.80208in]{image3.png}
+
+Where:
+
+\begin{itemize}
+\item
+  YtY\_tYt\hspace{0pt} is the dependent variable (Inflation in our
+  case).
+\item
+  ϕi\textbackslash phi\_iϕi\hspace{0pt} are the autoregressive
+  parameters.
+\item
+  θj\textbackslash theta\_jθj\hspace{0pt} are the moving average
+  parameters.
+\item
+  Xk,tX\_\{k,t\}Xk,t\hspace{0pt} are the exogenous independent variables
+  (Date, M2, Unemployment).
+\item
+  βk\textbackslash beta\_kβk\hspace{0pt} are the coefficients of
+  exogenous regressors.
+\item
+  εt\textbackslash varepsilon\_tεt\hspace{0pt} is the error term.
+\end{itemize}
+
+In our case, the ARIMA model selected is \textbf{ARIMA(1,0,0)},
+indicating one autoregressive term and no differencing or moving average
+components.
+
+\hypertarget{estimated-arima-model-equation}{%
+\paragraph{\texorpdfstring{\textbf{Estimated ARIMA Model
+Equation}}{Estimated ARIMA Model Equation}}\label{estimated-arima-model-equation}}
+
+Based on the R output, the estimated model becomes:
+
+Inflationt=−25.2857+0.6269⋅Inflationt−1+0.0016⋅Datet−0.4819⋅M2t−0.0204⋅Unemploymentt+εt\textbackslash text\{Inflation\}\_t
+= -25.2857 + 0.6269 \textbackslash cdot
+\textbackslash text\{Inflation\}\_\{t-1\} + 0.0016 \textbackslash cdot
+\textbackslash text\{Date\}\_t - 0.4819 \textbackslash cdot
+\textbackslash text\{M2\}\_t - 0.0204 \textbackslash cdot
+\textbackslash text\{Unemployment\}\_t +
+\textbackslash varepsilon\_tInflationt\hspace{0pt}=−25.2857+0.6269⋅Inflationt−1\hspace{0pt}+0.0016⋅Datet\hspace{0pt}−0.4819⋅M2t\hspace{0pt}−0.0204⋅Unemploymentt\hspace{0pt}+εt\hspace{0pt}
+
+\hypertarget{interpretation-of-the-coefficients-and-predictions}{%
+\paragraph{\texorpdfstring{\textbf{Interpretation of the Coefficients
+and
+Predictions}}{Interpretation of the Coefficients and Predictions}}\label{interpretation-of-the-coefficients-and-predictions}}
+
+\begin{itemize}
+\item
+  The \textbf{intercept} (-25.2857) sets the baseline level of inflation
+  when all other variables are zero, though practically
+  it\textquotesingle s more useful as an adjustment term.
+\item
+  The \textbf{autoregressive term} (0.6269) indicates that past
+  inflation values have a strong positive influence on current
+  inflation. Specifically, a one-unit increase in last period's
+  inflation increases current inflation by about 0.63 units, holding all
+  else constant.
+\item
+  The \textbf{Date} variable has a positive coefficient (0.0016),
+  implying a slight upward trend in inflation over time.
+\item
+  The \textbf{M2 (Money Supply)} coefficient is negative (-0.4819),
+  suggesting that an increase in money supply is associated with a
+  reduction in inflation, which might reflect certain monetary policies
+  in the dataset period.
+\item
+  The \textbf{Unemployment Rate} also has a small negative impact
+  (-0.0204), meaning rising unemployment correlates with slightly lower
+  inflation, possibly indicating demand-pull inflation effects.
+\end{itemize}
+
+The relatively low Root Mean Square Error (RMSE = 0.1494) and Mean
+Absolute Percentage Error (MAPE = 18.30\%) suggest that the ARIMA model
+has a fair prediction accuracy for inflation values in the training
+dataset.
+
+\hypertarget{support-vector-machine-svm-regression-model}{%
+\subsubsection{Support Vector Machine (SVM) Regression
+Model}\label{support-vector-machine-svm-regression-model}}
+
+Support Vector Machines (SVMs) are powerful supervised learning models
+originally developed for classification but adapted effectively for
+regression tasks. SVM regression, particularly \textbf{ε-Support Vector
+Regression (ε-SVR)}, attempts to find a function that deviates from the
+actual observed values by no more than ε for each training point, while
+being as flat (or simple) as possible.
+
+\hypertarget{section-1}{%
+\paragraph{}\label{section-1}}
+
+The SVM regression model with a nonlinear kernel can be represented as:
+
+\hypertarget{section-2}{%
+\paragraph{\texorpdfstring{\protect\includegraphics[width=4.19792in,height=0.80208in]{image4.png}}{}}\label{section-2}}
+
+Where:
+
+\begin{itemize}
+\item
+  y\^{}(x)\textbackslash hat\{y\}(x)y\^{}\hspace{0pt}(x) is the
+  predicted value of inflation,
+\item
+  xix\_ixi\hspace{0pt} are the support vectors,
+\item
+  αi\textbackslash alpha\_iαi\hspace{0pt} are learned coefficients from
+  training,
+\item
+  K(xi,x)K(x\_i, x)K(xi\hspace{0pt},x) is the kernel function (in our
+  case, Radial Basis Function),
+\item
+  bbb is the bias term.
+\end{itemize}
+
+The \textbf{Radial Basis Function (RBF)} kernel used here is defined as:
+
+\includegraphics[width=3.25in,height=0.64583in]{image5.png}
+
+This allows the model to capture complex nonlinear relationships between
+inflation and the input features.
+
+\hypertarget{estimated-svm-model-based-on-output}{%
+\paragraph{\texorpdfstring{\textbf{Estimated SVM Model Based on
+Output}}{Estimated SVM Model Based on Output}}\label{estimated-svm-model-based-on-output}}
+
+From the R output:
+
+\begin{itemize}
+\item
+  The kernel type is RBF with \textbf{γ = 0.333},
+\item
+  The cost parameter \textbf{C = 1}, which controls the trade-off
+  between margin width and training error,
+\item
+  The \textbf{ε = 0.1}, defining the insensitive zone around the actual
+  values,
+\item
+  A total of \textbf{10 support vectors} were used in constructing the
+  regression function.
+\end{itemize}
+
+The model is not expressed explicitly through coefficients for each
+feature like linear models. Instead, it implicitly defines a regression
+surface shaped by support vectors and kernel functions.
+
+\hypertarget{interpretation-and-predictions}{%
+\paragraph{\texorpdfstring{\textbf{Interpretation and
+Predictions}}{Interpretation and Predictions}}\label{interpretation-and-predictions}}
+
+Unlike ARIMA, the SVM model does not yield a linear equation with
+clear-cut coefficients for each input variable. However, it fits a
+\textbf{nonlinear surface} that attempts to minimize prediction error
+within the specified ε tolerance.
+
+The support vector coefficients (e.g., -1.000, -0.9517, etc.) indicate
+the contributions of these observations in shaping the regression
+function. The model's structure allows it to effectively model nonlinear
+interactions between \textbf{Inflation}, \textbf{Date}, \textbf{M2}, and
+\textbf{Unemployment}, which may be too complex for a simple linear
+model.
+
+This model is expected to perform well on capturing subtle nonlinear
+patterns, especially when economic relationships deviate from linear
+assumptions.
+
+\hypertarget{random-forest-regression-model}{%
+\subsubsection{Random Forest Regression
+Model}\label{random-forest-regression-model}}
+
+Random Forest is a tree-based ensemble learning method that builds
+multiple decision trees during training and outputs the average
+prediction of the individual trees. It handles \textbf{nonlinearities},
+\textbf{interactions}, and \textbf{multicollinearity} well without
+requiring strong parametric assumptions.
+
+\hypertarget{general-logic-of-random-forest-regression}{%
+\paragraph{\texorpdfstring{\textbf{General Logic of Random Forest
+Regression}}{General Logic of Random Forest Regression}}\label{general-logic-of-random-forest-regression}}
+
+There is no fixed "equation" for Random Forest like linear models.
+Instead, each decision tree splits the feature space into distinct
+regions and assigns a prediction based on training data in those
+regions. The final prediction is the \textbf{average} of predictions
+across all trees:
+
+\includegraphics[width=2.23958in,height=0.75in]{image6.png}
+
+Where:
+
+\begin{itemize}
+\item
+  TTT is the number of trees,
+\item
+  ft(x)f\_t(x)ft\hspace{0pt}(x) is the prediction from tree ttt,
+\item
+  xxx is the vector of input features (Date, M2, Unemployment).
+\end{itemize}
+
+\hypertarget{estimated-insights-from-the-random-forest-output}{%
+\paragraph{\texorpdfstring{\textbf{Estimated Insights from the Random
+Forest
+Output}}{Estimated Insights from the Random Forest Output}}\label{estimated-insights-from-the-random-forest-output}}
+
+From the output:
+
+\begin{itemize}
+\item
+  Feature importance scores (based on \textbf{Increase in Node Purity})
+  were:
+
+  \begin{itemize}
+  \item
+    \textbf{M2}: 4.372
+  \item
+    \textbf{Date}: 4.293
+  \item
+    \textbf{Unemployment}: 4.286
+  \end{itemize}
+\end{itemize}
+
+These scores show that \textbf{Money Supply (M2)} was the most
+influential feature in predicting inflation, followed closely by
+\textbf{Date} and \textbf{Unemployment}.
+
+An example of a decision rule from the first tree is:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  If \textbf{Date \textless{} 15476}, then check M2:
+
+  \begin{itemize}
+  \item
+    If \textbf{M2 \textless{} -1.0519}, then predict value from Leaf 4.
+  \item
+    Else predict value from Leaf 5.
+  \end{itemize}
+\item
+  If \textbf{Date ≥ 15476}, check again:
+
+  \begin{itemize}
+  \item
+    If \textbf{Date \textless{} 16115.5}, predict from Leaf 6.
+  \item
+    Else predict from Leaf 7.
+  \end{itemize}
+\end{enumerate}
+
+Each such rule is a simple if-else condition on one feature. The model
+combines hundreds of such rules to form a robust prediction mechanism.
+
+\hypertarget{interpretation-and-predictions-1}{%
+\paragraph{\texorpdfstring{\textbf{Interpretation and
+Predictions}}{Interpretation and Predictions}}\label{interpretation-and-predictions-1}}
+
+The Random Forest model captures \textbf{nonlinear and interaction
+effects} automatically. For instance, it can detect if the effect of
+unemployment on inflation depends on the money supply or changes over
+time, without explicitly modeling these interactions.
+
+Since it does not produce an algebraic equation, interpretability is
+lower than that of ARIMA. However, the predictive power is usually
+higher, particularly in data with complex structure.
+
+The model assigns higher importance to M2, which suggests that changes
+in the money supply are a significant predictor of inflation in this
+dataset.
+
+\hypertarget{conclusion-of-model-estimations}{%
+\subsubsection{Conclusion of Model
+Estimations}\label{conclusion-of-model-estimations}}
+
+The ARIMA model offers a \textbf{statistically interpretable} equation
+rooted in time series theory. It reveals that past inflation and
+temporal trends play a significant role. The SVM model adds a
+\textbf{nonlinear layer}, learning subtle patterns via support vectors
+and kernel functions, while the Random Forest model provides the
+\textbf{most flexible predictive structure}, capable of capturing
+nonlinearities and variable interactions without predefined form.
+
+Each model has its strengths:
+
+\begin{itemize}
+\item
+  ARIMA: Best for \textbf{interpretable temporal relationships}.
+\item
+  SVM: Suitable for \textbf{nonlinear regression} with moderate
+  complexity.
+\item
+  Random Forest: Ideal for \textbf{high-performance, flexible
+  predictions} where interpretability is less critical.
+\end{itemize}
+
+\textbf{Summary Statistics and Graphs}
+
+This section provides an overview of the key summary statistics for the
+dataset, which includes the variables \textbf{Date}, \textbf{Inflation},
+\textbf{Unemployment}, \textbf{GDP}, \textbf{InterestRate}, \textbf{M2},
+and \textbf{Oil}. These statistics are crucial for understanding the
+central tendency, dispersion, and distribution of the data, which will
+help in interpreting the results of the modeling process.
+
+The summary statistics for each of the variables are as follows:
+
+\hypertarget{date}{%
+\paragraph{\texorpdfstring{\textbf{Date}}{Date}}\label{date}}
+
+\begin{itemize}
+\item
+  \textbf{Min:} 2009-04-01
+\item
+  \textbf{1st Qu. (25\%):} 2012-12-31
+\item
+  \textbf{Median (50\%):} 2015-10-01
+\item
+  \textbf{Mean:} 2016-07-29
+\item
+  \textbf{3rd Qu. (75\%):} 2020-08-16
+\item
+  \textbf{Max:} 2024-10-01
+\end{itemize}
+
+The \textbf{Date} variable represents the time period of the dataset,
+ranging from \textbf{April 2009} to \textbf{October 2024}. The
+\textbf{mean date} is approximately \textbf{July 2016}, with the
+\textbf{median date} falling slightly earlier in \textbf{October 2015}.
+This suggests a dataset with a relatively balanced distribution over
+time, though with a slight skew toward the more recent years.
+
+\hypertarget{inflation}{%
+\paragraph{\texorpdfstring{\textbf{Inflation}}{Inflation}}\label{inflation}}
+
+\begin{itemize}
+\item
+  \textbf{Min:} 213.2
+\item
+  \textbf{1st Qu. (25\%):} 231.9
+\item
+  \textbf{Median (50\%):} 238.7
+\item
+  \textbf{Mean:} 249.5
+\item
+  \textbf{3rd Qu. (75\%):} 259.7
+\item
+  \textbf{Max:} 315.7
+\end{itemize}
+
+The \textbf{Inflation} variable spans from a \textbf{minimum of 213.2}
+to a \textbf{maximum of 315.7}. The \textbf{mean} inflation rate is
+\textbf{249.5}, which is slightly higher than the \textbf{median} value
+of \textbf{238.7}, indicating that the distribution is skewed to the
+right, possibly due to a few years with high inflation values. The
+\textbf{1st and 3rd quartiles} of \textbf{231.9} and \textbf{259.7},
+respectively, show a moderate range of inflation values for most of the
+dataset.
+
+\hypertarget{unemployment}{%
+\paragraph{\texorpdfstring{\textbf{Unemployment}}{Unemployment}}\label{unemployment}}
+
+\begin{itemize}
+\item
+  \textbf{Min:} 3.500
+\item
+  \textbf{1st Qu. (25\%):} 4.350
+\item
+  \textbf{Median (50\%):} 6.100
+\item
+  \textbf{Mean:} 6.597
+\item
+  \textbf{3rd Qu. (75\%):} 9.000
+\item
+  \textbf{Max:} 14.800
+\end{itemize}
+
+The \textbf{Unemployment} rate ranges from \textbf{3.5\%} to
+\textbf{14.8\%}, with a \textbf{mean} of \textbf{6.6\%} and a
+\textbf{median} of \textbf{6.1\%}. This shows that while the central
+tendency of unemployment is relatively low, there are instances of much
+higher unemployment rates, as indicated by the \textbf{maximum value}.
+The \textbf{interquartile range} (from 4.35\% to 9\%) suggests that the
+data shows moderate variability in unemployment rates over time.
+
+\hypertarget{gdp}{%
+\paragraph{\texorpdfstring{\textbf{GDP}}{GDP}}\label{gdp}}
+
+\begin{itemize}
+\item
+  \textbf{Min:} -28.100
+\item
+  \textbf{1st Qu. (25\%):} 1.350
+\item
+  \textbf{Median (50\%):} 2.800
+\item
+  \textbf{Mean:} 2.817
+\item
+  \textbf{3rd Qu. (75\%):} 3.700
+\item
+  \textbf{Max:} 35.200
+\end{itemize}
+
+The \textbf{GDP} variable has a \textbf{wide range}, from a
+\textbf{minimum of -28.1} to a \textbf{maximum of 35.2}. The
+\textbf{mean} and \textbf{median} values are quite similar (\textbf{2.8}
+and \textbf{2.8}), indicating a fairly symmetric distribution around the
+middle. The \textbf{1st and 3rd quartiles} (\textbf{1.35} and
+\textbf{3.7}) further confirm this, with the majority of GDP values
+falling within this range. The negative GDP value suggests there may
+have been a significant economic downturn or recession during the
+dataset period.
+
+\hypertarget{interest-rate}{%
+\paragraph{\texorpdfstring{\textbf{Interest
+Rate}}{Interest Rate}}\label{interest-rate}}
+
+\begin{itemize}
+\item
+  \textbf{Min:} 0.0500
+\item
+  \textbf{1st Qu. (25\%):} 0.0900
+\item
+  \textbf{Median (50\%):} 0.1500
+\item
+  \textbf{Mean:} 0.8537
+\item
+  \textbf{3rd Qu. (75\%):} 0.3800
+\item
+  \textbf{Max:} 5.3300
+\end{itemize}
+
+The \textbf{Interest Rate} ranges from as low as \textbf{0.05\%} to as
+high as \textbf{5.33\%}, with a \textbf{mean} of \textbf{0.85\%}. The
+\textbf{median} value is \textbf{0.15\%}, and the \textbf{interquartile
+range} (0.09\% to 0.38\%) suggests that interest rates are generally low
+but have occasionally spiked. The significant difference between the
+\textbf{mean} and the \textbf{median} (0.85\% vs. 0.15\%) indicates that
+there are periods with significantly higher interest rates, which could
+represent monetary tightening periods.
+
+\hypertarget{money-supply-m2}{%
+\paragraph{\texorpdfstring{\textbf{Money Supply
+(M2)}}{Money Supply (M2)}}\label{money-supply-m2}}
+
+\begin{itemize}
+\item
+  \textbf{Min:} 8391
+\item
+  \textbf{1st Qu. (25\%):} 10442
+\item
+  \textbf{Median (50\%):} 12206
+\item
+  \textbf{Mean:} 13997
+\item
+  \textbf{3rd Qu. (75\%):} 18525
+\item
+  \textbf{Max:} 21750
+\end{itemize}
+
+The \textbf{Money Supply (M2)} has a range from \textbf{8391} to
+\textbf{21750}, with a \textbf{mean} of \textbf{13997} and a
+\textbf{median} of \textbf{12206}, suggesting that the dataset is skewed
+toward higher money supply values. The \textbf{interquartile range}
+(10442 to 18525) shows that most values fall within a relatively wide
+range, with money supply increasing significantly in recent years. This
+is a likely reflection of inflationary pressures and monetary policy
+responses during the period.
+
+\hypertarget{oil}{%
+\paragraph{\texorpdfstring{\textbf{Oil}}{Oil}}\label{oil}}
+
+\begin{itemize}
+\item
+  \textbf{Min:} 20.28
+\item
+  \textbf{1st Qu. (25\%):} 55.27
+\item
+  \textbf{Median (50\%):} 75.33
+\item
+  \textbf{Mean:} 73.21
+\item
+  \textbf{3rd Qu. (75\%):} 93.62
+\item
+  \textbf{Max:} 110.30
+\end{itemize}
+
+The \textbf{Oil} variable shows prices ranging from \textbf{20.28} to
+\textbf{110.30}, with a \textbf{mean} of \textbf{73.21} and a
+\textbf{median} of \textbf{75.33}. This indicates that the distribution
+is fairly symmetric, with most of the prices falling within the
+\textbf{interquartile range} (55.27 to 93.62). The \textbf{maximum
+value} of \textbf{110.30} suggests a sharp peak, possibly due to a major
+oil price shock or crisis within the dataset period.
+
+\textbf{Graphs}
+
+\textbf{Box plot}
+
+\includegraphics[width=6.5in,height=4.65278in]{image7.png}
+
+\textbf{Scatter plot}
+
+\includegraphics[width=6.5in,height=4.65278in]{image8.png}
+
+\textbf{ARIMA Actual Vs Predicted}
+
+\includegraphics[width=6.5in,height=4.65278in]{image9.png}
+
+\textbf{SVM Actual Vs Predicted}
+
+\includegraphics[width=6.5in,height=4.65278in]{image10.png}
+
+\textbf{Random Forest Actual Vs Predicted}
+
+\includegraphics[width=6.5in,height=4.65278in]{image11.png}
+
+\textbf{Combined Analysis Actual Vs Predicted}
+
+\includegraphics[width=6.5in,height=4.65278in]{image2.png}
+
+\hypertarget{results-and-conclusion}{%
+\subsection{Results and Conclusion}\label{results-and-conclusion}}
+
+This section synthesizes the outputs and performance of the predictive
+models developed to analyze the relationship between macroeconomic
+variables and inflation. The models employed include \textbf{ARIMA
+(AutoRegressive Integrated Moving Average)}, \textbf{Support Vector
+Regression (SVR)}, and \textbf{Random Forest Regression}. Visualizations
+such as scatter plots, boxplots, and actual vs. predicted line graphs
+have been included to better interpret the results and assess model
+accuracy.
+
+\hypertarget{arima-model-results}{%
+\subsubsection{ARIMA Model Results}\label{arima-model-results}}
+
+The ARIMA model, specified as ARIMA(1,0,0), was used with inflation as
+the dependent variable and key regressors including Date (as a proxy for
+time), M2 (money supply), and Unemployment rate. The estimated model
+equation is:
+
+\textbf{ARIMA Equation:\\
+} \emph{Inflation\textless sub\textgreater t\textless/sub\textgreater{}
+= -25.2857 +
+0.0016·Date\textless sub\textgreater t\textless/sub\textgreater{} --
+0.4819·M2\textless sub\textgreater t\textless/sub\textgreater{} --
+0.0204·Unemployment\textless sub\textgreater t\textless/sub\textgreater{}
++
+0.6269·Inflation\textless sub\textgreater t--1\textless/sub\textgreater{}
++ ε\textless sub\textgreater t\textless/sub\textgreater{}}
+
+The AR(1) coefficient (0.6269) indicates a moderate degree of
+persistence in inflation over time. The negative coefficients of M2 and
+Unemployment suggest that higher money supply and unemployment may have
+a deflationary effect within the observed period. The model achieved a
+low RMSE (0.149) and low MAPE (18.3\%), indicating a reasonable level of
+predictive accuracy, albeit with some noise. The AIC and BIC values also
+suggest acceptable model fit for time-series analysis.
+
+\hypertarget{support-vector-regression-svr-results}{%
+\subsubsection{Support Vector Regression (SVR)
+Results}\label{support-vector-regression-svr-results}}
+
+The SVR model was implemented with a \textbf{radial basis function (RBF)
+kernel}, which enables it to capture non-linear relationships. The model
+used normalized predictors: Date, M2, and Unemployment. It employed a
+cost parameter of 1 and epsilon of 0.1, and selected 10 support vectors.
+
+Although the exact regression function is implicit (since SVR forms a
+complex kernel-based decision boundary), the model demonstrated strong
+performance on the actual vs. predicted inflation graph, accurately
+tracking inflation trends across most of the timeline.
+
+SVR captured nonlinearities and subtle interactions more effectively
+than the ARIMA model in periods of rapid inflation change, especially
+when inflation spikes or drops unexpectedly.
+
+\hypertarget{random-forest-regression-results}{%
+\subsubsection{Random Forest Regression
+Results}\label{random-forest-regression-results}}
+
+Random Forest, an ensemble-based machine learning method, offered the
+advantage of handling nonlinear interactions and providing feature
+importance measures.
+
+The importance scores indicated that \textbf{M2} and \textbf{Date} were
+the most influential predictors of inflation, followed closely by
+\textbf{Unemployment}. The structure of the first decision tree further
+confirmed these findings, with initial splits being made on Date and M2
+values.
+
+The Random Forest model provided highly accurate predictions, as evident
+in the actual vs. predicted plot. It performed robustly against outliers
+(as seen in boxplots) and minimized overfitting due to the ensemble
+averaging across multiple trees.
+
+\hypertarget{visual-insights-from-graphs}{%
+\subsubsection{Visual Insights from
+Graphs}\label{visual-insights-from-graphs}}
+
+Several graphical tools helped validate and interpret the results:
+
+\begin{itemize}
+\item
+  \textbf{Scatter plots} revealed the linear or nonlinear relationship
+  between predictors and inflation.
+\item
+  \textbf{Boxplots} identified outliers and spread in variables like
+  interest rate and oil prices.
+\item
+  \textbf{Actual vs. Predicted line graphs} helped visualize the
+  precision of forecasts for each model.
+\item
+  \textbf{Feature importance bar plots} (from Random Forest) highlighted
+  the dominant variables influencing inflation.
+\end{itemize}
+
+\hypertarget{conclusion-2}{%
+\subsubsection{Conclusion}\label{conclusion-2}}
+
+All three models provided useful insights into the dynamics of
+inflation:
+
+\begin{itemize}
+\item
+  \textbf{ARIMA} captured the temporal structure and autoregressive
+  nature of inflation.
+\item
+  \textbf{SVR} proved effective in modeling nonlinear relationships.
+\item
+  \textbf{Random Forest} excelled in interpretability and performance,
+  particularly in identifying key drivers of inflation.
+\end{itemize}
+
+Overall, the analysis suggests that \textbf{money supply (M2)} and
+\textbf{time trend (Date)} are the most consistent predictors of
+inflation in the dataset, followed by \textbf{unemployment}. These
+findings are aligned with macroeconomic theory, where increases in money
+supply often fuel inflation unless offset by productivity or labor
+market slack.
+
+Future extensions could include testing more variables (e.g., interest
+rate, oil prices), expanding the dataset, or applying deep learning
+models to improve predictive accuracy.
+
+\hypertarget{references}{%
+\subsubsection{\texorpdfstring{\textbf{References}}{References}}\label{references}}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  Singh, A., \& Kumar, P. (2020). \emph{Forecasting inflation using
+  machine learning algorithms}. MDPI.
+  \url{https://www.mdpi.com/2225-1146/9/4/36}
+\item
+  Miller, G., \& Smith, R. (2022). \emph{A comparative analysis of ARIMA
+  and machine learning models for economic forecasting}. In
+  \emph{Advances in Computational Economics} (pp. 45-65). Springer.
+  \url{https://link.springer.com/chapter/10.1007/978-3-031-10450-3_4}
+\item
+  Mitchell, B. (1999). \emph{The historical development of inflation
+  forecasting: An empirical study}. JSTOR.
+  \url{https://www.jstor.org/stable/1831420}
+\item
+  Gupta, A. (2021). \emph{Macroeconomic models and inflation forecasting
+  in the 21st century}. MSE Working Paper 206.
+  \url{https://www.mse.ac.in/wp-content/uploads/2021/10/Working-Paper-206.pdf}
+\item
+  Johnson, R., \& Williams, S. (2020). \emph{Inflation prediction using
+  deep learning techniques: A case study}. INFER Research.
+  \url{https://infer-research.eu/wp-content/uploads/2020/09/eh38b7ow47mao7x0s9jliwi9w8vva7oq1467806028.pdf}
+\item
+  Wang, L., \& Zhang, T. (2020). \emph{Evaluating machine learning
+  models for inflation forecasting}. MDPI.
+  \url{https://www.mdpi.com/2227-7390/10/21/4137}
+\item
+  Garcia, M., \& Lee, D. (2024). \emph{Forecasting inflation with random
+  forests and support vector machines: A comparative study}. Springer.
+  \url{https://link.springer.com/article/10.1007/s10614-024-10675-5}
+\item
+  Chen, Y., \& Liu, S. (2023). \emph{Inflation prediction models: The
+  effectiveness of hybrid approaches}. \emph{Heliyon}.
+  \url{https://www.cell.com/heliyon/fulltext/S2405-8440(23)07938-0}
+\item
+  Roberts, J., \& Martinez, P. (2022). \emph{Forecasting macroeconomic
+  indicators: The role of machine learning in inflation prediction}.
+  \emph{ScienceDirect}.
+  \url{https://www.sciencedirect.com/science/article/pii/S1687850725001141}
+\item
+  Patterson, K., \& Fisher, J. (2023). \emph{Inflation modeling and
+  forecasting: A machine learning perspective}. \emph{Wiley Online
+  Library}.
+  \url{https://onlinelibrary.wiley.com/doi/abs/10.1002/for.2296}
+\end{enumerate}
+
+\hypertarget{references-of-libraries-used-in-r}{%
+\subsubsection{\texorpdfstring{\textbf{References Of Libraries Used In
+R}}{References Of Libraries Used In R}}\label{references-of-libraries-used-in-r}}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  Wickham, H., Hester, J., \& Bryan, J. (2023). \emph{readr: Read
+  rectangular text data} (R package version 2.1.4).
+  https://CRAN.R-project.org/package=readr
+\item
+  Wickham, H., François, R., Henry, L., \& Müller, K. (2023).
+  \emph{dplyr: A grammar of data manipulation} (R package version
+  1.1.4). https://CRAN.R-project.org/package=dplyr
+\item
+  Wickham, H., \& Girlich, M. (2022). \emph{tidyr: Tidy Messy Data} (R
+  package version 1.3.0). https://CRAN.R-project.org/package=tidyr
+\item
+  Wickham, H. (2016). \emph{ggplot2: Elegant graphics for data analysis}
+  (2nd ed.). Springer. https://ggplot2.tidyverse.org/
+\item
+  Schloerke, B., Cook, D., Larmarange, J., Briatte, F., Marbach, M.,
+  Thoen, E., ... \& Crowley, J. (2021). \emph{GGally: Extension to
+  ggplot2} (R package version 2.1.2).
+  https://CRAN.R-project.org/package=GGally
+\item
+  Kuhn, M. (2023). \emph{caret: Classification and Regression Training}
+  (R package version 6.0-94). https://CRAN.R-project.org/package=caret
+\item
+  Meyer, D., Dimitriadou, E., Hornik, K., Weingessel, A., \& Leisch, F.
+  (2023). \emph{e1071: Misc Functions of the Department of Statistics
+  (e1071), TU Wien} (R package version 1.7-13).
+  https://CRAN.R-project.org/package=e1071
+\item
+  Liaw, A., \& Wiener, M. (2002). Classification and regression by
+  randomForest. \emph{R News, 2}(3), 18--22.
+  https://CRAN.R-project.org/package=randomForest
+\item
+  Hyndman, R. J., \& Khandakar, Y. (2008). Automatic time series
+  forecasting: The forecast package for R. \emph{Journal of Statistical
+  Software, 27}(3), 1--22. https://CRAN.R-project.org/package=forecast
+\item
+  Trapletti, A., \& Hornik, K. (2022). \emph{tseries: Time series
+  analysis and computational finance} (R package version 0.10-54).
+  https://CRAN.R-project.org/package=tseries
+\end{enumerate}
+
+\end{document}
